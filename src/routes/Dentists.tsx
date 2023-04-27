@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import DentistForm from '../components/dentists/DentistForm'
-import NavBar from '../components/navbar/NavBar'
 import DentistsList from '../components/dentists/DentistsList'
+import Layout from '../utils/Layout'
 import './Dentists.css'
 
 const Dentists = () => {
@@ -10,8 +10,7 @@ const Dentists = () => {
     const [showList, setShowList] = useState(false);
 
     return (
-        <>
-            <NavBar />
+        <Layout>
             <div className='dentist'>
                 <p onClick={() => setShowForm(!showForm)}>Dentists registration</p>
                 <p>|</p>
@@ -19,7 +18,7 @@ const Dentists = () => {
             </div>
             { showForm && <DentistForm /> }
             { showList && <DentistsList />}
-        </>
+        </Layout>
     )
 }
 export default Dentists

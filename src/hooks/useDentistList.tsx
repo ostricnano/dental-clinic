@@ -42,6 +42,7 @@ const DentistProvider = ({ children }: DentistProviderProps) => {
         axios.post("http://localhost:8082/odontologos/registrar", newDentist)
         .then(response => {
             console.log(response);
+            getDentistList();
         })
         .catch(error => {
             console.log(error);
@@ -64,11 +65,11 @@ const DentistProvider = ({ children }: DentistProviderProps) => {
         axios.put("http://localhost:8082/odontologos/actualizar", dentist)
         .then(response => {
             console.log(response);
+            getDentistList();
         })
         .catch(error => {
             console.log(error);
         })
-        getDentistList();
         setDentistFound({} as Dentist);
     }
     
@@ -85,13 +86,13 @@ const DentistProvider = ({ children }: DentistProviderProps) => {
         axios.delete(`http://localhost:8082/odontologos/eliminar/${id}`)
         .then(response => {
             console.log(response);
+            getDentistList();
         })
-        getDentistList();
     }
     
     useEffect(() => {
         getDentistList();
-    }, [newDentist])
+    }, [])
 
     return (
         <DentistContext.Provider value={{getDentistList, updateDentist, addDentist, dentist, setDentist, findDentist, dentistFound, setDentistFound, deleteDentist}}>

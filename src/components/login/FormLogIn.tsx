@@ -31,11 +31,11 @@ const FormLogIn = () => {
             setToken(data)
             localStorage.setItem('token', data.jwt)
         }) 
+        if(token && token !== undefined){
+            window.location.href = '/home'
+        }
     }
     
-    if(token){
-        window.location.href = '/home'
-    }
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -66,7 +66,7 @@ const FormLogIn = () => {
                     onChange={handleChange}
                     value={inputValues.password}
                 /> <br />
-                <button>Iniciar sesion</button>
+                <button type="submit">Iniciar sesion</button>
             </form>
             <Link className="link" to='/signin'>Ingrese aqui para crear una cuenta</Link>
         </div>

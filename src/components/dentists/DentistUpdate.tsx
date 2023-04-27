@@ -8,10 +8,14 @@ interface DentistUpdate {
     nombre: string;
     apellido: string;
 }
+type Props = {
+   
+    setShowUpdateForm: (showUpdateForm: boolean) => void;
+ }
 
-const DentistUpdate = () => {
+const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
     
-    const { dentistFound, setDentistFound, updateDentist, getDentistList }:any= useContext(DentistContext);
+    const { dentistFound, setDentistFound, updateDentist }:any= useContext(DentistContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDentistFound({ ...dentistFound, [e.target.name]: e.target.value })
@@ -20,9 +24,8 @@ const DentistUpdate = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         updateDentist(dentistFound)
-        getDentistList()
+        setShowUpdateForm(false)
     }
-    
 
     return (
         <form action="" className="dentist-update" onSubmit={handleSubmit}>

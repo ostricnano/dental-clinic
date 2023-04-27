@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import {DentistContext} from '../../hooks/useDentistList'
 import DentistUpdate from './DentistUpdate';
 import './DentistList.css'
@@ -12,12 +12,19 @@ interface Dentist {
 
 const DentistsList = () => {
 
-   const { dentist, findDentist, deleteDentist, getDentistList} = useContext(DentistContext);
+   const [ showUpdateForm, setShowUpdateForm ] = useState(false);
+   console.log(showUpdateForm)
+
+   const { dentist, findDentist, deleteDentist } = useContext(DentistContext);
 
    const handleDelete = (id: number) => {
       deleteDentist(id)
-      getDentistList()
    }
+   const handleUpdate = (id:number) => {
+      findDentist(id)
+      setShowUpdateForm(true)
+   }
+
 
     return (
       <div>
@@ -36,7 +43,7 @@ const DentistsList = () => {
                   dentist.map((dentist: Dentist) => {
                      return(
                         <tr key={dentist.id}>
-                           <td><button onClick={() => findDentist(dentist.id)} className='button-update'>{dentist.id}</button></td>
+                           <td><button onClick={() => handleUpdate(dentist.id)} className='button-update'>{dentist.id}</button></td>
                            <td>{dentist.numeroDeMatricula}</td>
                            <td>{dentist.nombre}</td>
                            <td>{dentist.apellido}</td>
@@ -47,7 +54,7 @@ const DentistsList = () => {
                }
             </tbody>
          </table>
-         <DentistUpdate />
+         {showUpdateForm ? <DentistUpdate  setShowUpdateForm={setShowUpdateForm} /> : ''}
       </div>
     )
 }
