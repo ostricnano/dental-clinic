@@ -18,11 +18,11 @@ interface DentistContextValue {
     dentistFound: Dentist;
     setDentist: (dentist: Dentist[]) => void;
     setDentistFound: (dentistFound: Dentist) => void;
-    findDentist: (id: number) => void;
-    deleteDentist: (id: number) => void;
     addDentist: (dentist: NewDentist) => void;
-    updateDentist: (dentist: Dentist) => void;
     getDentistList: () => void;
+    findDentist: (id: number) => void;
+    updateDentist: (dentist: Dentist) => void;
+    deleteDentist: (id: number) => void;
 }
 
 interface DentistProviderProps {

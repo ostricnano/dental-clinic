@@ -10,7 +10,7 @@ const NavBar = () => {
 
     return(
         <div className="navbar">
-            <h3 className='logo'>Dental | Clinic</h3>
+            <Link className='link' to='/home'><h3 className='logo'>Dental | Clinic</h3></Link>
             <div className='links'>
                 <Link className='link' to='/dentists'>Dentists</Link>
                 <Link className='link' to='/clients'>Clientes</Link>

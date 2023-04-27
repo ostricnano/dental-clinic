@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ClientContext } from "../../hooks/useClient";
 
 
 interface ClienFormData {
@@ -6,7 +7,7 @@ interface ClienFormData {
     nombre: string;
     dni: string;
     email: string;
-    fechaIngreso: Date | string;
+    fechaIngreso: string;
     domicilio: Domicilio;
 }
 interface Domicilio {
@@ -20,6 +21,8 @@ const ClientForm = () => {
     const [formData, setFormData] = useState<ClienFormData>({ 
         apellido: '', nombre: '', dni: '', email: '', fechaIngreso: Date(), domicilio: {calle: '', numero: '', localidad: '', provincia: ''}})
 
+    const { addClient } = useContext(ClientContext);    
+        
     const handleChangeClient = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value})
@@ -36,20 +39,7 @@ const ClientForm = () => {
     }
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData)
-        fetch("http://localhost:8082/pacientes/registrar", {
-            method: "POST",
-            body: JSON.stringify(formData),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('---------data---------');
-            console.log(data);
-            
-        })
+        addClient(formData);
         setFormData({
             apellido: '', nombre: '', dni: '', email: '', fechaIngreso: '', domicilio: {calle: '', numero: '', localidad: '', provincia: ''}
         })

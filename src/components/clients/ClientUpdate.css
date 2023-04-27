@@ -1,0 +1,10 @@
+.client-update{
+    margin-top: 3rem;
+    width: 80vw;
+}
+.client-update, input{
+    width: 100%;
+}
+.client-update, button{
+    margin-bottom: 1rem;
+}

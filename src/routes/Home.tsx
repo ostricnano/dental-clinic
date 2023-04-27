@@ -1,13 +1,13 @@
 import NavBar from '../components/navbar/NavBar'
-import { useContext } from 'react'
+import Layout from '../utils/Layout'
 
 
 const Home = () => {
 
     return(
-        <div>
-            <NavBar />
-        </div>
+        <Layout>
+            
+        </Layout>
     )
 }
 export default Home

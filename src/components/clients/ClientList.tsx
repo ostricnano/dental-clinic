@@ -1,12 +1,20 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ClientContext } from "../../hooks/useClient";
 import ClientUpdate from "./ClientUpdate";
 import './ClientList.css'
 
 
 const ClientList = () => {
-
+    const [ showUpdateForm, setShowUpdateForm ] = useState(false);
     const { client, deleteClient, findClient } = useContext(ClientContext);
+
+    const handleDelete = (id: number) => {
+        deleteClient(id)
+    }
+    const handleUpdate = (id:number) => {
+        findClient(id)
+        setShowUpdateForm(true)
+    }
 
     return (
         <div>
@@ -31,7 +39,7 @@ const ClientList = () => {
                         client.map((client: any) => {
                             return (
                                 <tr key={client.id}>
-                                    <td><button onClick={()=>findClient(client.id)} className='button-update'>{client.id}</button></td>
+                                    <td><button onClick={()=>handleUpdate(client.id)} className='button-update'>{client.id}</button></td>
                                     <td>{client.nombre}</td>
                                     <td>{client.apellido}</td>
                                     <td>{client.dni}</td>
@@ -41,14 +49,14 @@ const ClientList = () => {
                                     <td>{client.domicilio.numero}</td>
                                     <td>{client.domicilio.localidad}</td>
                                     <td>{client.domicilio.provincia}</td>
-                                    <td><button onClick={()=>deleteClient(client.id)} className='button-delete'>X</button></td>
+                                    <td><button onClick={()=>handleDelete(client.id)} className='button-delete'>X</button></td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
             </table>
-            <ClientUpdate />
+            {showUpdateForm? <ClientUpdate setShowUpdateForm={setShowUpdateForm} /> : ''}
         </div>
     )
 };

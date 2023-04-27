@@ -4,6 +4,7 @@ import ClientForm from '../components/clients/ClientForm'
 import ClientList from '../components/clients/ClientList'
 import './Dentists.css'
 import ClientProvider from '../hooks/useClient'
+import Layout from '../utils/Layout'
 
 const Clients = () => {
 
@@ -11,8 +12,7 @@ const Clients = () => {
     const [showList, setShowList] = useState(false);
 
     return (
-        <>
-            <NavBar />
+        <Layout>
             <div className='dentist'>
                 <p onClick={() => setShowForm(!showForm)}>Clients registration</p>
                 <p>|</p>
@@ -22,7 +22,7 @@ const Clients = () => {
                 { showForm && <ClientForm />}
                 { showList && <ClientList />}
             </ClientProvider>
-        </>
+        </Layout>
     )
 }
 export default Clients

@@ -1,0 +1,10 @@
+.appointment-update{
+    margin-top: 3rem;
+    width: 80vw;
+}
+.appointment-update, input{
+    width: 100%;
+}
+.appointment-update, button{
+    margin-bottom: 1rem;
+}

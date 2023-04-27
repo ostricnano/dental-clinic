@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useRef, useContext } from 'react'
 import { DentistContext } from '../../hooks/useDentistList';
 import axios from 'axios'
 import './DentistForm.css'

@@ -13,8 +13,6 @@ interface Dentist {
 const DentistsList = () => {
 
    const [ showUpdateForm, setShowUpdateForm ] = useState(false);
-   console.log(showUpdateForm)
-
    const { dentist, findDentist, deleteDentist } = useContext(DentistContext);
 
    const handleDelete = (id: number) => {
