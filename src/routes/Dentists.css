@@ -1,0 +1,13 @@
+.dentist{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+p{
+    margin: 1rem;
+    cursor: pointer;
+}
+p:hover{
+    color: #ccc;
+}

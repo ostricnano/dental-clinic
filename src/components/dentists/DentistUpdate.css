@@ -1,0 +1,10 @@
+.dentist-update{
+    margin-top: 3rem;
+    width: 80vw;
+}
+.dentist-update, input{
+    width: 100%;
+}
+.dentist-update, button{
+    margin-bottom: 1rem;
+}

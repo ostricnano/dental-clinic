@@ -1,0 +1,20 @@
+table{
+   width: 80vw; 
+   height: auto;
+    margin: 0 auto;
+}
+th, td{
+    font-weight: 500;
+    padding: 10px;
+    height: 40px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.button-update, .button-delete{
+    display: block;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}

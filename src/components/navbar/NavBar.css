@@ -1,0 +1,26 @@
+.navbar{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 60px;
+    background:  #fff;
+}
+.navButton{
+    width: 100px;
+    margin-right: 1rem;
+}
+.link{
+    text-decoration: none;
+    padding: 5px;
+}
+.logo{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #ccc;
+    margin: 0; 
+    padding: 0; 
+    margin-left: 1rem;
+    
+}
