@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     email: '',
     password: '',
     userRole:''
-}
+} 
 interface FormState {
     firstName: string
     lastName: string

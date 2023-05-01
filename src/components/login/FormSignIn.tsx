@@ -1,8 +1,18 @@
 import { useState } from "react";
 import useFormSingIn from "../../hooks/useSingInForm";
+import  onValidate  from './validate'
+
+interface InputErrors {
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    userRole: string
+}
 
 const FormSignIn = () => {
     const [inputValues, dispatch] = useFormSingIn();
+    const [ errors, setErrors ] = useState<InputErrors>({} as InputErrors);
 
     const usuarioEnviado = {
         nombre: inputValues.firstName,
@@ -15,6 +25,9 @@ const FormSignIn = () => {
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
         console.log(inputValues);
+        const err : InputErrors | any = onValidate(inputValues);
+        setErrors(err);
+        if (Object.keys(err).length === 0) {
         fetch("http://localhost:8082/usuarios/registrar", {
             method: "POST",
             body: JSON.stringify(usuarioEnviado),
@@ -26,6 +39,8 @@ const FormSignIn = () => {
         .then((data) => {
             console.log(data);
         })
+        .catch((error) => console.log(error));
+        }
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -37,9 +52,8 @@ const FormSignIn = () => {
             },
         });
     }
-    const handleClick = () => {
-        window.location.href = "/";
-    }
+    console.log(errors);
+    
     return(
         <form className="form-logIn" onSubmit={handleSubmit}>
             <input 
@@ -48,14 +62,16 @@ const FormSignIn = () => {
                 placeholder="FirstName"
                 onChange={handleChange}
                 value={inputValues.firstName}
-            /><br />
+            />
+            {errors ? <div className="errors"><p>{errors.firstName}</p></div> : null}
             <input 
                 type="text" 
                 name="lastName" 
                 placeholder="LastName" 
                 onChange={handleChange}
                 value={inputValues.lastName}
-            /><br />
+            />
+            {errors && <div className="errors"><p>{errors.lastName}</p></div>}
             <input 
                 type="text" 
                 name="email" 
@@ -63,22 +79,24 @@ const FormSignIn = () => {
                 onChange={handleChange}
                 value={inputValues.email}
             />
-            <br />
+            {errors && <div className="errors"><p>{errors.email}</p></div>}
             <input 
                 type="password" 
                 name="password" 
                 placeholder="Password" 
                 onChange={handleChange}
                 value={inputValues.password}
-            /><br />
+            />
+            {errors && <div className="errors"><p>{errors.password}</p></div>}
             <input 
                 type="text" 
                 name="userRole"
                 placeholder="User" 
                 onChange={handleChange}
                 value={inputValues.userRole}
-            /><br />
-            <button type="submit" onClick={handleClick}>Registrar</button>
+            />
+            {errors && <div className="errors"><p>{errors.userRole}</p></div>}
+            <button type="submit" >Registrar</button>
         </form>
     )
 }
