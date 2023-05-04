@@ -1,6 +1,6 @@
 import { useState, useRef, useContext } from 'react'
 import { DentistContext } from '../../hooks/useDentistList';
-import axios from 'axios'
+import onValidate from './validateDentist'
 import './DentistForm.css'
 
 
@@ -9,9 +9,15 @@ interface DentistFormData {
     nombre: string;
     apellido: string;
 }
+interface InputErrorsDentist {
+    numeroDeMatricula: string;
+    nombre: string;
+    apellido: string;
+}
 
 const DentistForm = () => {
     const [formData, setFormData] = useState<DentistFormData>({ numeroDeMatricula: '', nombre: '', apellido: ''})
+    const [errors, setErrors] = useState<InputErrorsDentist>({} as InputErrorsDentist)
     const formRef = useRef<HTMLFormElement>(null);
     const { addDentist } = useContext(DentistContext);
 
@@ -24,8 +30,12 @@ const DentistForm = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const err : InputErrorsDentist | any = onValidate(formData);
+        setErrors(err);
+        if (Object.keys(err).length === 0) {
         addDentist(formData);
         setFormData({ numeroDeMatricula: '', nombre: '', apellido: ''})
+        }
     }
     
 
@@ -38,6 +48,7 @@ const DentistForm = () => {
                 value={formData.numeroDeMatricula}
                 onChange={handleChange} 
             />
+            {errors && <div className="errors"><p>{errors.numeroDeMatricula}</p></div>}
             <input 
                 type="text" 
                 placeholder='First Name'
@@ -45,6 +56,7 @@ const DentistForm = () => {
                 value={formData.nombre}
                 onChange={handleChange} 
             />
+            {errors && <div className="errors"><p>{errors.nombre}</p></div>}
             <input 
                 type="text" 
                 placeholder='Last Name'
@@ -52,6 +64,7 @@ const DentistForm = () => {
                 value={formData.apellido}
                 onChange={handleChange} 
             />
+            {errors && <div className="errors"><p>{errors.apellido}</p></div>}
             <button type='submit'>Enrrol dentist</button>
         </form>
     )

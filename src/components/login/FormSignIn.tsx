@@ -24,7 +24,7 @@ const FormSignIn = () => {
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        console.log(inputValues);
+        
         const err : InputErrors | any = onValidate(inputValues);
         setErrors(err);
         if (Object.keys(err).length === 0) {
@@ -35,7 +35,14 @@ const FormSignIn = () => {
                 "Content-Type": "application/json",
             },
         })
-        .then((response) => response.json())
+        .then((response) => {
+            setTimeout(() => {
+                if (response.ok) {
+                    window.location.href = "/";
+                }
+            }, 2000);
+            return response.json();
+        })
         .then((data) => {
             console.log(data);
         })
@@ -52,10 +59,10 @@ const FormSignIn = () => {
             },
         });
     }
-    console.log(errors);
     
     return(
         <form className="form-logIn" onSubmit={handleSubmit}>
+            <h3>Login form</h3>
             <input 
                 type="text" 
                 name="firstName" 

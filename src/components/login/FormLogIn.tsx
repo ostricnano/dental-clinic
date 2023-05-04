@@ -1,14 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useState, useContext } from "react";
 import useFormLogIn from "../../hooks/useFormLogIn"
 import { Link } from "react-router-dom"
+import  onValidate  from './validateLogin'
+import { AuthContext } from "../../utils/authContext"
 import './FormLogIn.css'
 
-
+interface InputErrorsLogin {
+    userName: string    
+    password: string
+}
 
 const FormLogIn = () => {
-    
+
+    const { signIn } = useContext(AuthContext);
     const [inputValues, dispatch] = useFormLogIn();
-    const [ token, setToken ] = React.useState<string | null>(null);
+    const [ errors, setErrors ] = React.useState<InputErrorsLogin>({} as InputErrorsLogin);
+    
     
     
     const usuarioEnviado = {
@@ -18,25 +25,18 @@ const FormLogIn = () => {
     
     const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        fetch('http://localhost:8082/authenticate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(usuarioEnviado)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            setToken(data)
-            localStorage.setItem('token', data.jwt)
-        }) 
-        if(token && token !== undefined){
+        const err : InputErrorsLogin | any = onValidate(inputValues);
+        setErrors(err);
+        if (Object.keys(err).length === 0) {
+           await signIn(usuarioEnviado.userName, usuarioEnviado.password);  
+        }
+        if(!localStorage.getItem('token')){
+            alert('Usuario o contraseña incorrectos')
+        } else {
             window.location.href = '/home'
         }
     }
-    
-    
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         dispatch({
@@ -58,17 +58,19 @@ const FormLogIn = () => {
                     placeholder="Username" 
                     onChange={handleChange}
                     value={inputValues.userName}
-                /> <br />
+                />
+                {errors && <div className="errors"><p>{errors.userName}</p></div>}
                 <input 
                     type="password" 
                     name="password" 
                     placeholder="password" 
                     onChange={handleChange}
                     value={inputValues.password}
-                /> <br />
-                <button type="submit">Iniciar sesion</button>
+                />
+                {errors && <div className="errors"><p>{errors.password}</p></div>}
+                <button type="submit" >Iniciar sesion</button>
             </form>
-            <Link className="link" to='/signin'>Ingrese aqui para crear una cuenta</Link>
+            <Link className="link" to='/signin'>Don't have an account yet? Enter here to have one</Link>
         </div>
     )
 }

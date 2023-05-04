@@ -10,24 +10,24 @@ const onValidate = (inputValues: InputErrors) => {
     let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     if(!inputValues.firstName){
-        errors = {firstName: 'El campo nombre no puede estar vacío'}
+        errors = {firstName: 'The name field cannot be empty'}
     }else if(!regexName.test(inputValues.firstName)){
-        errors = {firstName: 'El campo nombre solo puede contener letras y espacios'}
+        errors = {firstName: 'The name field can only contain letters and spaces'}
     }
     if(!inputValues.lastName){
-        errors = {...errors, lastName: 'El campo apellido no puede estar vacío'}
+        errors = {...errors, lastName: 'The last name field cannot be empty'}
     }else if(!regexName.test(inputValues.lastName)){
-        errors = {...errors, lastName: 'El campo apellido solo puede contener letras y espacios'}
+        errors = {...errors, lastName: 'the last name field can only contain letters and spaces'}
     }
     if(!inputValues.email){
-        errors = {...errors, email: 'El campo email no puede estar vacío'}
+        errors = {...errors, email: 'The email field cannot be empty'}
     }else if(!regexEmail.test(inputValues.email)){
-        errors = {...errors, email: 'El campo email no es válido'}
+        errors = {...errors, email: 'The email field is not valid'}
     }
     if(!inputValues.password){
-        errors = {...errors, password: 'El campo contraseña no puede estar vacío'}
+        errors = {...errors, password: 'The password field cannot be empty'}
     }else if(inputValues.password.length < 6){
-        errors = {...errors, password: 'El campo contraseña debe tener al menos 6 caracteres'}
+        errors = {...errors, password: 'The password must be at least 6 characters long'}
     }
     return errors;
 }

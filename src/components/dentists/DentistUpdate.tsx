@@ -1,5 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 import {DentistContext} from '../../hooks/useDentistList'
+import onValidate from './validateDentist'
 import './DentistUpdate.css'
 
 interface DentistUpdate {
@@ -8,13 +9,17 @@ interface DentistUpdate {
     nombre: string;
     apellido: string;
 }
+interface InputErrorsDentist {
+    numeroDeMatricula: string;
+    nombre: string;
+    apellido: string;
+}
 type Props = {
-   
     setShowUpdateForm: (showUpdateForm: boolean) => void;
  }
 
 const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
-    
+    const [ errors, setErrors ] = useState<InputErrorsDentist>({} as InputErrorsDentist)
     const { dentistFound, setDentistFound, updateDentist }:any= useContext(DentistContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +28,12 @@ const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateDentist(dentistFound)
-        setShowUpdateForm(false)
+        const err : InputErrorsDentist | any = onValidate(dentistFound);
+        setErrors(err);
+        if (Object.keys(err).length === 0) {
+            updateDentist(dentistFound)
+            setShowUpdateForm(false)
+        }
     }
 
     return (
@@ -42,6 +51,7 @@ const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
                 value={dentistFound.numeroDeMatricula || '' }
                 onChange={handleChange}
             />
+            { errors && <div className="errors"><p>{errors.numeroDeMatricula}</p></div> }
             <input 
                 type="text" 
                 placeholder="First Name" 
@@ -49,6 +59,7 @@ const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
                 value={dentistFound.nombre || '' }
                 onChange={handleChange}
             />
+            { errors && <div className="errors"><p>{errors.nombre}</p></div> }
             <input 
                 type="text" 
                 placeholder="Last Name" 
@@ -56,6 +67,7 @@ const DentistUpdate: React.FC<Props> = ({ setShowUpdateForm }) => {
                 value={dentistFound.apellido || '' } 
                 onChange={handleChange}
             />
+            { errors && <div className="errors"><p>{errors.apellido}</p></div> }
             <button type="submit">Update</button>
         </form>
     )
