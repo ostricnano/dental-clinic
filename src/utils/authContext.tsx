@@ -7,7 +7,6 @@ interface User {
 
 interface AuthState {
     token: string | null;
-    
 }
 
 interface AuthContextProps {
